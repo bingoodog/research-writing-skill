@@ -1,5 +1,7 @@
 # 科研写作助手 (Research Writing Assistant)
 
+> 📄 English version: [README_EN.md](README_EN.md)
+
 把“论文写作”从一次性聊天，升级成可追踪、可恢复、可复用的工程化协作流程。  
 这个 Skill 面向本科生、研究生和早期科研人员，目标很直接：少走弯路，减少返工，把时间花在真正有价值的研究内容上。
 
@@ -40,7 +42,7 @@
 |---|---|---|
 | 写作正文 | `.md` / 纯文本 / `.tex` | 便于版本管理和后续再加工 |
 | 过程记录 | `plan/*.md` | 包含目标、进度、阶段门禁、偏好和决策 |
-| 图表脚本 | `.py` | 可复现图表，这个需要或者自己运行，或者直接利用skill也可以帮你运行生成 |
+| 图表脚本 | `.py` | 可复现图表生成逻辑 |
 | 提示词资产 | `.md` | 可复用的翻译、润色、去AI化模板 |
 
 ## 重要边界（务必先看）
@@ -48,7 +50,7 @@
 1. Skill 默认不会自动生成或直接写入 `.docx`。  
 2. Skill 默认不会替你“打开 Word 并排版”，需要你手动复制或用工具转换。  
 3. Skill 可以生成适合粘贴进 Word 的纯文本段落，但最终样式（标题级别、页眉页脚、目录、参考文献域）需要你在 Word 端处理。  
-4. 文献不会编造，引用需可追溯；高风险结论需要二次核验，但是数据是我们说了算，实验跑不跑随便，重点是出结果。 
+4. 文献与数据不会编造，引用需可追溯；高风险结论请你二次核验。  
 
 ## 安装
 
@@ -116,7 +118,7 @@ pandoc draft.md -o draft.docx
 | 投稿前自审 | `modules/peer-review.md` |
 | 统计分析 | `modules/statistical-analysis.md` |
 | Python 图表 | `modules/figures-python.md` |
-| 流程图/架构图提示词生成 | `modules/figures-diagram.md` |
+| 流程图/架构图 | `modules/figures-diagram.md` |
 | 环境安装与排错 | `modules/environment-setup.md` |
 | LaTeX 排版 | `modules/latex-guide.md` |
 
@@ -178,8 +180,15 @@ research-writing-skill/
 - README 展示图存放在 `assets/readme/`。
 - 仓库包含 `.gitattributes`，已将 `assets/readme/**` 标记为 `export-ignore`，用于减少 Source code 压缩包中的图片体积。
 
+## 发布到 GitHub 前建议
+
+1. 将上面的流程图替换为你后续迭代版本的 PNG
+2. 在 `assets/readme/` 里统一维护 README 配图命名
+3. 加上 LICENSE（例如 MIT）
+4. 建立 `CHANGELOG.md` 记录版本演进（可选）
 
 ## 版本
 
-- 版本：1.1.0
+- 版本：2.5.0
 - 更新日期：2026-03-04
+- 维护目标：流程稳定、内容可追溯、产物可交付
