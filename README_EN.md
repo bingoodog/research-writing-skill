@@ -8,29 +8,32 @@ This Skill is designed for undergraduates, graduate students, and early-stage re
 ## What This Is
 
 This is not a prompt pack that only polishes sentences. It is a complete research writing collaboration system.  
-Before starting any task, it aligns goals and constraints, automatically manages the `plan/` project context, and routes to the appropriate module based on your discipline and task type.
+Before starting any task, it aligns goals and constraints through a brainstorming process to confirm paper type, research background, methods, and chapter structure, then routes to the appropriate skill module based on your discipline and task type.
 
 If you are working on a thesis, a course project paper, or a submission draft, this Skill is more reliable than ordinary conversational writing tools — because it emphasizes process, documentation, and write-back, without depending on single-session memory.
 
 ## Core Capabilities
 
+- **Brainstorming**: 7-round Q&A to confirm paper type, discipline, title, research background, methods, chapter structure
 - **End-to-end collaboration**: From topic development, body writing, and figure generation to pre-submission self-review, executed with stage gates
 - **De-AI writing**: Constrains mechanical transition words, hollow emphasis phrases, subjective expressions, and bullet-point dumping
 - **Discipline-specific writing support**: Routed modules for engineering, social sciences, medicine, and law
 - **Literature review support**: Integration of English-language search and Chinese literature organization
-- **Environment automation**: Miniconda installation, virtual environment creation, plotting dependency setup, and troubleshooting
-- **Recoverable plans**: `plan/` continuously records goals, deliverables, decisions, and next steps
+- **LaTeX template support**: Provide your institution/journal template, auto-generate compilable LaTeX project
+- **Environment automation**: Miniconda installation, virtual environment creation, plotting dependency setup
 
 ## Supported Platforms
 
-This Skill uses a directory-based design compatible with mainstream local skill-loading workflows. Currently supported platforms:
+This Skill uses a directory-based design, adapted for the following platforms:
 
-- Cursor
-- Windsurf
-- Antigravity
-- Qoder
-- CC
-- OpenCode
+| Platform | Configuration |
+|----------|---------------|
+| Claude Code | `.claude-plugin/plugin.json` |
+| Cursor | `.cursor-plugin/plugin.json` |
+| Codex | `.codex/INSTALL.md` |
+| OpenCode | `.opencode/INSTALL.md` |
+| Gemini CLI | `GEMINI.md` |
+| Others | `AGENTS.md` |
 
 ## What You Get
 
@@ -39,7 +42,8 @@ By default, Skill outputs are project files — not finished Word documents.
 | Output Type | Default Format | Notes |
 |---|---|---|
 | Written body | `.md` / plain text / `.tex` | Suitable for version control and further processing |
-| Process records | `plan/*.md` | Contains goals, progress, stage gates, preferences, and decisions |
+| Chapter files | `chapters/*.md` | One file per chapter |
+| LaTeX project | `chapters/*.tex` + `main.tex` | Directly compilable |
 | Figure scripts | `.py` | Reproducible figure generation logic |
 | Prompt assets | `.md` | Reusable templates for translation, polishing, and de-AI-ification |
 
@@ -52,13 +56,22 @@ By default, Skill outputs are project files — not finished Word documents.
 
 ## Installation
 
+### Option 1: Direct Download
+
 Download the repository, extract it, and copy `research-writing-skill/` into your paper writing directory.
 
-Recommended steps:
+### Option 2: Git Clone
 
-1. Download and extract this repository.
-2. Copy the `research-writing-skill/` folder into your paper project directory.
-3. Load the local Skill directory in your platform (or copy it to the platform's required skills directory).
+```bash
+git clone https://github.com/Norman-bury/articlewriting-skill.git
+cd articlewriting-skill
+```
+
+### Platform-specific Installation
+
+- **Codex**: See `.codex/INSTALL.md`
+- **OpenCode**: See `.opencode/INSTALL.md`
+- **Others**: Place the entire directory in your paper project root
 
 ## Real Usage Example (Input → Output)
 
@@ -66,59 +79,61 @@ Recommended steps:
 
 ## Standard Collaboration Workflow (Recommended)
 
-1. Define the task goal, deliverables, and deadline for this session
-2. Have the Skill create or read the `plan/` context
-3. Have the Skill produce a reviewable Markdown draft first
-4. Run the style check script to handle de-AI-ification and formatting issues
-5. Verify terminology, data, and citations before finalizing
-6. Manually migrate to Word and apply your institution's template
+1. **Brainstorming**: Say "I want to write a paper", the Skill will guide you to confirm paper type, title, research background, etc.
+2. **Chapter planning**: After confirming chapter structure, the Skill creates framework in `chapters/`
+3. **Chapter writing**: Write chapter by chapter, one file per chapter
+4. **Figure generation**: When data figures are needed, the Skill generates Python scripts
+5. **Self-review**: Use the peer-review skill for pre-submission review
+6. **Delivery**: Manually migrate to Word/LaTeX for final formatting
+
+## Skill Map
+
+| Scenario | Skill |
+|---|---|
+| Entry and routing | `skills/using-research-writing/` |
+| Brainstorming | `skills/brainstorming-research/` |
+| Chapter writing | `skills/writing-chapters/` |
+| LaTeX output | `skills/latex-output/` |
+| General writing standards | `skills/writing-core/` |
+| Humanities / social science writing | `skills/writing-humanities/` |
+| Medical / biology writing | `skills/writing-medical/` |
+| Law writing | `skills/writing-law/` |
+| Literature review | `skills/literature-review/` |
+| Translation / polishing / de-AI | `skills/prompts-collection/` |
+| Pre-submission self-review | `skills/peer-review/` |
+| Statistical analysis | `skills/statistical-analysis/` |
+| Python figures | `skills/figures-python/` |
+| Flowcharts / architecture diagrams | `skills/figures-diagram/` |
+| Environment setup and troubleshooting | `skills/environment-setup/` |
+
+## LaTeX Template Usage
+
+If you have a LaTeX template from your institution or journal:
+
+1. Place template files (`.cls`, `.sty`, `.tex`, etc.) in `latex-templates/` directory
+2. Tell the AI "use my LaTeX template"
+3. The AI will parse template structure and generate corresponding `.tex` chapter files
+
+See `latex-templates/README.md` for details.
 
 ## Delivering Markdown to Word
 
 ### Option A: Manual Copy (Default Recommendation)
 
-1. Ask the Skill to output a "plain-text paragraph version" of the body (avoiding Markdown markers)
+1. Ask the Skill to output a "plain-text paragraph version" (avoiding Markdown markers)
 2. Copy the body in your editor and paste it into Word
-3. Apply your institution's template styles in Word (headings, body text, figure captions, table captions)
+3. Apply your institution's template styles in Word (headings, body text, captions)
 4. Manually check equations, references, figure/table numbers, and cross-references
 
 ### Option B: Pandoc Conversion (Optional)
 
-If you have Pandoc installed locally, you can try:
+If you have Pandoc installed locally:
 
 ```bash
 pandoc draft.md -o draft.docx
 ```
 
 Note: This only handles format conversion — it does not replace your institution's template styling or final manual review.
-
-## Common Scripts
-
-- Initialize plan directory  
-  macOS/Linux: `bash research-writing-skill/scripts/init_plan.sh`  
-  Windows PowerShell: `powershell -ExecutionPolicy Bypass -File research-writing-skill/scripts/init_plan.ps1`
-
-- De-AI and style check  
-  macOS/Linux: `bash research-writing-skill/scripts/style_check.sh <file.md>`  
-  Windows PowerShell: `powershell -ExecutionPolicy Bypass -File research-writing-skill/scripts/style_check.ps1 -FilePath <file.md>`
-
-## Module Map
-
-| Scenario | Module |
-|---|---|
-| Full workflow progression and submission prep | `modules/workflow-lifecycle.md` |
-| General academic writing | `modules/writing-core.md` |
-| Humanities / social science writing | `modules/writing-humanities.md` |
-| Medical / biology writing | `modules/writing-medical.md` |
-| Law writing | `modules/writing-law.md` |
-| Literature review | `modules/literature-review.md` |
-| Translation / polishing / de-AI-ification | `modules/prompts-collection.md` |
-| Pre-submission self-review | `modules/peer-review.md` |
-| Statistical analysis | `modules/statistical-analysis.md` |
-| Python figures | `modules/figures-python.md` |
-| Flowcharts / architecture diagrams | `modules/figures-diagram.md` |
-| Environment setup and troubleshooting | `modules/environment-setup.md` |
-| LaTeX typesetting | `modules/latex-guide.md` |
 
 ## FAQ
 
@@ -128,7 +143,7 @@ Research collaboration needs text assets that are trackable, reusable, and versi
 
 ### Can it generate the final submittable version for me?
 
-It can produce content close to a final draft, but your institution's template, table of contents fields, page numbers, reference fields, and formatting details should still be finalized in Word. Most md-to-docx and md-to-pdf converters on the market are unreliable — manual copy-paste is recommended. A practical trick: paste the paragraphs into a WeChat chat first, then copy from WeChat into Word to avoid carrying over Markdown formatting.
+It can produce content close to a final draft, but your institution's template, table of contents fields, page numbers, reference fields, and formatting details should still be finalized in Word.
 
 ### Will this Skill fabricate references?
 
@@ -138,53 +153,43 @@ No. The rules explicitly prohibit fabricating references or data. All citations 
 
 ```text
 research-writing-skill/
-├── SKILL.md
-├── modules/
-│   ├── module-guide.md
-│   ├── workflow-lifecycle.md
-│   ├── writing-core.md
-│   ├── writing-humanities.md
-│   ├── writing-medical.md
-│   ├── writing-law.md
-│   ├── literature-review.md
-│   ├── prompts-collection.md
-│   ├── peer-review.md
-│   ├── statistical-analysis.md
-│   ├── figures-python.md
-│   ├── figures-diagram.md
-│   ├── environment-setup.md
-│   └── latex-guide.md
-├── templates/
-│   ├── figure-template.py
-│   ├── color-palettes.md
-│   └── paper-outline.md
-├── plan-template/
-│   ├── project-overview.md
-│   ├── stage-gates.md
-│   ├── outline.md
-│   ├── progress.md
-│   └── notes.md
-└── scripts/
-    ├── init_plan.sh
-    ├── init_plan.ps1
-    ├── style_check.sh
-    └── style_check.ps1
+├── SKILL.md                    # Main entry (legacy platform compatible)
+├── AGENTS.md                   # General agent configuration
+├── GEMINI.md                   # Gemini CLI configuration
+├── CHANGELOG.md                # Version history
+├── .claude-plugin/             # Claude Code configuration
+├── .cursor-plugin/             # Cursor configuration
+├── .codex/                     # Codex configuration
+├── .opencode/                  # OpenCode configuration
+├── hooks/                      # Session start scripts
+│   ├── session-start
+│   ├── hooks.json
+│   └── hooks-cursor.json
+├── skills/                     # Skill modules directory
+│   ├── using-research-writing/
+│   ├── brainstorming-research/
+│   ├── writing-chapters/
+│   ├── latex-output/
+│   ├── literature-review/
+│   ├── figures-python/
+│   ├── figures-diagram/
+│   ├── peer-review/
+│   ├── statistical-analysis/
+│   ├── environment-setup/
+│   ├── prompts-collection/
+│   ├── writing-core/
+│   ├── writing-humanities/
+│   ├── writing-medical/
+│   └── writing-law/
+├── latex-templates/            # User LaTeX templates directory
+├── modules/                    # Legacy modules (kept for compatibility)
+├── templates/                  # Code templates
+├── plan-template/              # Plan templates
+└── scripts/                    # Utility scripts
 ```
-
-## Images and Download Notes
-
-- README display images are stored in `assets/readme/`.
-- The repository includes `.gitattributes` marking `assets/readme/**` as `export-ignore` to reduce image size in source code archives.
-
-## Before Publishing to GitHub
-
-1. Replace the workflow diagram above with a PNG from your next iteration
-2. Maintain consistent README image naming under `assets/readme/`
-3. Add a LICENSE file (e.g., MIT)
-4. Optionally create a `CHANGELOG.md` to track version history
 
 ## Version
 
-- Version: 2.5.0
-- Updated: 2026-03-04
-- Maintenance goal: Stable workflow, traceable content, deliverable outputs
+- Version: 3.0.0
+- Updated: 2026-03-19
+- Maintenance goal: Stable workflow, traceable content, deliverable outputs, multi-platform support
