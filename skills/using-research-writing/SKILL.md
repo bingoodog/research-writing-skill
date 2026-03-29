@@ -1,6 +1,6 @@
 ---
 name: using-research-writing
-description: 科研写作助手入口技能 - 在任何论文写作任务前必须先检查此技能，确定流程和规则
+description: Use when starting any research writing task - establishes workflow and routes to appropriate skills
 ---
 
 <SUBAGENT-STOP>

@@ -1,6 +1,6 @@
 ---
 name: writing-medical
-description: "医学写作技能 - 针对医学、生物、临床研究类论文提供专项指导"
+description: Use when writing medical, biological, or clinical research papers - provides IMRaD structure and reporting guidelines
 ---
 
 # 医学写作专项

@@ -1,6 +1,6 @@
 ---
 name: peer-review
-description: "同行评审与自审技能 - 提供论文评审、自我审视和批判性分析指南"
+description: Use before submission or when reviewing papers - provides evaluation checklists, bias detection, and self-review templates
 ---
 
 # 同行评审与自审

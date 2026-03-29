@@ -1,6 +1,6 @@
 ---
 name: writing-core
-description: "核心写作规范技能 - 控制论文写作质量，重点是去AI化表达与规范排版"
+description: Use when writing STEM papers - enforces de-AI-ification rules, formatting standards, and quality controls
 ---
 
 # 核心写作规范

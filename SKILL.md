@@ -1,17 +1,19 @@
 ---
 name: research-writing-assistant
-description: 面向中文科研论文的AI写作助手。支持头脑风暴、章节写作、文献综述、Python图表、LaTeX输出。
+description: Use when writing academic papers, theses, or research articles - supports brainstorming, chapter writing, literature review, and LaTeX output
 allowed-tools: Read Write Edit Bash WebSearch
 ---
 
 # 科研写作助手 (Research Writing Assistant)
 
-面向本科与研究生论文写作的执行型 Skill，重点解决：
-- **头脑风暴**：7轮问答确认论文类型、学科、题目、研究背景、方法、章节结构
-- **写作去AI化**：约束机械过渡词、空壳强调句、主观化表达
-- **章节化输出**：每章输出到 `chapters/` 目录的独立文件
-- **LaTeX支持**：用户提供模板后可输出可编译的 LaTeX 项目
-- **环境自动化**：Miniconda + 虚拟环境 + 绘图依赖
+面向本科与研究生论文写作的执行型 Skill。
+
+## 哲学原则
+
+- **流程优于即兴** — 头脑风暴先行，结构确认再写作
+- **证据优于声称** — 引用可追溯，绝不编造文献
+- **简洁优于复杂** — 去AI化写作，拒绝机械表达
+- **确认优于假设** — 每章用户确认，避免返工
 
 ## 新架构（v3.0）
 
@@ -50,6 +52,7 @@ allowed-tools: Read Write Edit Bash WebSearch
 
 | 技能 | 路径 | 说明 |
 |------|------|------|
+| verification | `skills/verification/` | 验证机制，确保完成声称有证据 |
 | figures-python | `skills/figures-python/` | Python 数据图表 |
 | figures-diagram | `skills/figures-diagram/` | 流程图/架构图 |
 | peer-review | `skills/peer-review/` | 自审检查 |
@@ -57,7 +60,41 @@ allowed-tools: Read Write Edit Bash WebSearch
 | prompts-collection | `skills/prompts-collection/` | 提示词集合 |
 | environment-setup | `skills/environment-setup/` | 环境配置 |
 
-## 执行门禁
+## Red Flags（停止并检查）
+
+### 流程类 Red Flags
+
+| AI的想法 | 正确做法 |
+|----------|----------|
+| "用户说得很清楚了，直接开始写" | 必须先完成 brainstorming-research |
+| "这只是修改一小段" | 检查是否有 plan/，没有则先创建 |
+| "先写一段看看效果" | 必须先确认论文类型和章节结构 |
+| "用户很着急，跳过讨论" | 流程可以加速，但不能跳过关键确认 |
+| "这是简单任务，不需要 plan" | 任何写作任务都需要 plan 记录 |
+| "我知道怎么写论文" | 必须按用户选择的类型和结构写 |
+| "先把内容写完再说格式" | 格式在 brainstorming 阶段确定 |
+| "这章内容很简单，不用确认" | 每章写完都必须让用户确认 |
+
+### 文献类 Red Flags
+
+| AI的想法 | 正确做法 |
+|----------|----------|
+| "文献我可以补充一些" | 绝不编造文献，必须可追溯 |
+| "我记得这个技能的内容" | 技能会更新，必须重新读取当前版本 |
+| "这个引用看起来很合理" | 没有来源的引用一律不写 |
+| "用户应该知道这个领域" | 不假设用户知识，问清楚再写 |
+
+### 验证类 Red Flags（来自 verification 技能）
+
+| AI的想法 | 正确做法 |
+|----------|----------|
+| "应该写完了" | 运行验证命令确认 |
+| "章节看起来完整" | 执行字数统计和结构检查 |
+| "引用应该是真的" | 调用 CrossRef API 或搜索验证 |
+| "格式应该没问题" | 运行格式检查脚本 |
+| "搜索完成" | 检查结果数量和 DOI 列表 |
+| "我很确信" | 确信 ≠ 证据，运行验证 |
+| "就这一次跳过验证" | 没有例外 |
 
 <EXTREMELY-IMPORTANT>
 任何论文写作任务开始前，必须先调用 `skills/using-research-writing/` 确定流程。
@@ -76,13 +113,35 @@ allowed-tools: Read Write Edit Bash WebSearch
 
 2. **章节写作** → 调用 `writing-chapters`
    - 每章独立文件
-   - 去 AI 化检查
+   - 两阶段 Review（见下方）
    - 用户确认后继续
 
 3. **LaTeX 输出**（可选）→ 调用 `latex-output`
    - 用户提供模板
    - 输出 .tex 文件
    - 可直接编译
+
+4. **两阶段 Review**（每章完成后）
+   - **阶段一：规范合规** — 检查字数、结构、引用格式是否满足要求
+   - **阶段二:质量检查** — 检查去AI化、语言流畅度、学术表达
+
+## 模块兼容（向后兼容）
+
+## 两阶段 Review 机制
+
+每章写作完成后，执行两阶段检查：
+
+**阶段一：规范合规检查**
+- 字数是否符合要求
+- 章节结构是否完整
+- 引用格式是否正确
+- 小节标题是否清晰
+
+**阶段二：质量检查**
+- 去 AI 化：无机械过渡词、无空壳强调句
+- 语言流畅：无重复表达、无冗余
+- 学术表达：使用"本文"、"本研究"等客观表述
+- 段落结构：优先连贯段落，不使用列表堆砌
 
 ## 模块兼容（向后兼容）
 
@@ -126,6 +185,16 @@ allowed-tools: Read Write Edit Bash WebSearch
 
 ## 版本信息
 
-- 版本：3.0.0
-- 更新日期：2026-03-19
-- 维护目标：可执行、可追踪、流程化、多平台适配
+- **版本**：3.1.0
+- **更新日期**：2026-03-28
+- **维护目标**：可执行、可追踪、流程化、多平台适配
+
+### v3.1 更新内容
+
+1. **哲学原则** — 明确核心价值观
+2. **CSO优化** — 所有技能 description 使用 "Use when..." 格式
+3. **增强 Red Flags** — 从10条扩展到12条
+4. **两阶段 Review** — 规范合规 + 质量检查
+5. **语言默认规则** — 毕业论文默认中文，期刊根据要求
+6. **结构模板** — 7种论文类型的默认结构模板
+7. **交互优化** — 让用户少做选择，多做确认

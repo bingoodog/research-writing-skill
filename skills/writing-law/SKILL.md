@@ -1,6 +1,6 @@
 ---
 name: writing-law
-description: "法学写作技能 - 针对法学论文的写作特点提供专项指导"
+description: Use when writing law papers - provides legal writing conventions, citation formats, and argumentation guidance
 ---
 
 # 法学写作专项

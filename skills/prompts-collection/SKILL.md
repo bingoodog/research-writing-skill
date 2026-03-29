@@ -1,6 +1,6 @@
 ---
 name: prompts-collection
-description: "写作提示词集技能 - 提供翻译、润色、去AI化等常用提示词模板"
+description: Use for translation, polishing, or de-AI-ification of academic text - provides ready-to-use prompt templates
 ---
 
 # 写作提示词集合

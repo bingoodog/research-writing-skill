@@ -1,6 +1,6 @@
 ---
 name: statistical-analysis
-description: "统计分析技能 - 提供统计检验选择、执行和报告指南"
+description: Use when planning or reporting statistical analysis - provides test selection, execution code, and APA format guidelines
 ---
 
 # 统计分析指南

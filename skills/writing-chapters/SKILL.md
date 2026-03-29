@@ -1,6 +1,6 @@
 ---
 name: writing-chapters
-description: "逐章写作技能 - 必须在 brainstorming-research 完成后调用，按章节顺序写作并更新进度"
+description: Use when writing paper chapters - requires completed brainstorming, writes one chapter at a time with user confirmation
 ---
 
 # 章节写作
@@ -23,10 +23,42 @@ description: "逐章写作技能 - 必须在 brainstorming-research 完成后调
 - [ ] 与用户确认本章关键论点和内容方向
 - [ ] 根据学科领域调用对应写作模块
 - [ ] 写作输出到 chapters/XX-name.md
-- [ ] 执行去 AI 化检查
+- [ ] **阶段1：规范合规检查**
+- [ ] **阶段2：质量检查（去AI化、语言流畅度）**
 - [ ] 更新 plan/progress.md
 - [ ] 展示写作成果，询问用户确认或修改
 - [ ] 用户确认后，询问是否继续下一章
+
+## 两阶段 Review 机制
+
+每章写作完成后，必须执行两阶段检查：
+
+### 阶段1：规范合规检查
+
+检查是否满足论文基本要求：
+
+| 检查项 | 说明 |
+|--------|------|
+| 字数 | 是否达到目标字数（±10%可接受）|
+| 结构 | 章节结构是否完整，小节是否清晰 |
+| 引用格式 | 引用格式是否统一（GB/T 7714 或 APA）|
+| 标题层级 | 是否符合论文规范 |
+
+**检查结果**：✅ 通过 / ❌ 需修改
+
+### 阶段2：质量检查
+
+检查写作质量：
+
+| 检查项 | 说明 |
+|--------|------|
+| 去AI化 | 无机械过渡词、无空壳强调句 |
+| 语言流畅 | 无重复表达、无冗余 |
+| 学术表达 | 使用"本文"、"本研究"等客观表述 |
+| 段落结构 | 优先连贯段落，不使用列表堆砌 |
+| 引用真实 | 所有引用可追溯，无编造 |
+
+**检查结果**：✅ 通过 / ❌ 需修改
 
 ## 写作流程
 
@@ -69,6 +101,8 @@ digraph writing_chapters {
 - outline.md：章节大纲和要点
 - progress.md：已完成章节
 - notes.md：用户偏好和特殊要求
+
+**参考结构模板**: `skills/brainstorming-research/templates.md` 了解不同论文类型的标准结构。
 
 ### 2. 确认当前章节
 

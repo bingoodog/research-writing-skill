@@ -1,6 +1,6 @@
 ---
 name: figures-diagram
-description: "流程图/结构图技能 - 生成专业的画图提示词供生图AI使用"
+description: Use when creating flowcharts, architecture diagrams, or conceptual diagrams - generates prompts for image AI
 ---
 
 # 流程图/结构图生成

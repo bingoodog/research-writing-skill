@@ -1,6 +1,6 @@
 ---
 name: figures-python
-description: "Python图表技能 - 生成科研论文级别的数据图表，支持顶刊配色和高分辨率输出"
+description: Use when creating data visualizations for papers - generates publication-quality plots with top-journal color schemes
 ---
 
 # Python 数据图表

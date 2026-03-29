@@ -1,6 +1,7 @@
 ---
 name: literature-review
-description: "文献综述技能 - 指导文献搜索、整理和综述写作，确保文献真实可靠"
+description: Use when writing literature review sections - guides searching, organizing, and synthesizing academic sources
+allowed-tools: Read, Write, Edit, Bash, WebSearch, WebFetch
 ---
 
 # 文献综述
@@ -18,6 +19,78 @@ description: "文献综述技能 - 指导文献搜索、整理和综述写作，
 4. **不确定的文献信息，宁可不写也不编造**
 </EXTREMELY-IMPORTANT>
 
+<MCP-INTEGRATION>
+## 文献工具脚本
+
+本技能内置了多个文献处理脚本：
+
+### 1. 文献搜索 (scholar_search.py)
+
+**脚本位置**：`scripts/scholar_search.py`
+
+**支持的数据库**：PubMed, CrossRef, Semantic Scholar, arXiv
+
+**支持的输出格式**：
+- `json` - JSON 格式（默认）
+- `bibtex` - BibTeX 格式，可直接用于 LaTeX
+- `ris` - RIS 格式，用于 EndNote/Zotero
+- `apa` - APA 引用格式
+- `mla` - MLA 引用格式
+- `chicago` - Chicago 引用格式
+- `vancouver` - Vancouver 引用格式
+
+### 使用方法
+
+```bash
+# 基本搜索
+python scripts/scholar_search.py "deep learning transformer"
+
+# 指定数据库
+python scripts/scholar_search.py "neural network" --sources pubmed,crossref
+
+# 年份过滤（当前是2026年，建议使用近年范围）
+python scripts/scholar_search.py "machine learning" --year 2023-2026
+
+# 输出 BibTeX 格式（用于 LaTeX 论文）
+python scripts/scholar_search.py "landslide detection" --format bibtex -o refs.bib
+
+# 输出 APA 引用格式
+python scripts/scholar_search.py "attention mechanism" --format apa --limit 5
+
+# JSON 输出（用于程序处理）
+python scripts/scholar_search.py "quantum computing" --format json -o results.json
+```
+
+### 输出格式示例
+
+**BibTeX 格式**（用于 LaTeX）：
+```bibtex
+@article{xu2024,
+  title = {CAS Landslide Dataset: A Large-Scale and Multisensor Dataset},
+  author = {Yulin Xu and Chaojun Ouyang and Qingsong Xu},
+  journal = {Scientific Data},
+  year = {2024},
+  doi = {10.1038/s41597-023-02847-z},
+}
+```
+
+**APA 格式**（用于正文引用）：
+```
+Yulin Xu and Chaojun Ouyang (2024). CAS Landslide Dataset...
+```
+
+### 各数据库特点
+
+| 数据库 | 速率限制 | 摘要 | 引用数 | 适用领域 |
+|--------|----------|------|--------|----------|
+| CrossRef | 高 | 部分 | 是 | 全学科 |
+| PubMed | 中 | 需额外请求 | 否 | 生物医学 |
+| Semantic Scholar | 低* | 是 | 是 | 全学科 |
+| arXiv | 低 | 是 | 否 | CS/物理/数学 |
+
+\* Semantic Scholar 建议配置 API Key 以获得更高限额。
+</MCP-INTEGRATION>
+
 ## Checklist
 
 - [ ] 确认综述主题和范围
@@ -31,7 +104,94 @@ description: "文献综述技能 - 指导文献搜索、整理和综述写作，
 
 ## 一、文献搜索指南
 
-### 1.1 英文文献搜索
+### 1.0 脚本搜索（推荐）
+
+**使用 `scripts/scholar_search.py` 进行多数据库并行搜索。**
+
+#### 基本用法
+
+```bash
+# 搜索所有数据库，输出 JSON
+python scripts/scholar_search.py "your query" --format json -o results.json
+
+# 指定数据库和年份
+python scripts/scholar_search.py "deep learning" --sources crossref,semanticscholar --year 2023-2026
+
+# 仅搜索 PubMed（生物医学）
+python scripts/scholar_search.py "hippocampus memory" --sources pubmed --limit 20
+```
+
+#### BibTeX 输出（用于 LaTeX 论文）
+
+```bash
+# 输出 BibTeX 格式
+python scripts/scholar_search.py "landslide detection" --format bibtex -o refs.bib
+
+# 直接输出到控制台
+python scripts/scholar_search.py "transformer attention" --format bibtex --limit 5
+```
+
+**BibTeX 输出示例**：
+```bibtex
+@article{xu2024,
+  title = {CAS Landslide Dataset: A Large-Scale and Multisensor Dataset},
+  author = {Yulin Xu and Chaojun Ouyang and Qingsong Xu},
+  journal = {Scientific Data},
+  year = {2024},
+  doi = {10.1038/s41597-023-02847-z},
+  url = {https://doi.org/10.1038/s41597-023-02847-z}
+}
+```
+
+#### 文本引用格式
+
+```bash
+# APA 格式
+python scripts/scholar_search.py "neural network" --format apa --limit 3
+
+# MLA 格式
+python scripts/scholar_search.py "machine learning" --format mla --limit 3
+
+# Chicago 格式
+python scripts/scholar_search.py "attention mechanism" --format chicago --limit 3
+```
+
+**APA 输出示例**：
+```
+Yulin Xu and Chaojun Ouyang (2024). CAS Landslide Dataset: A Large-Scale
+and Multisensor Dataset for Deep Learning-Based Landslide Detection.
+Scientific Data. 10.1038/s41597-023-02847-z
+```
+
+#### 搜索策略建议
+
+1. **开始搜索**：使用 CrossRef（速度快、结果多、有引用数）
+2. **精确搜索**：添加年份范围过滤
+3. **领域搜索**：
+   - 生物医学 → PubMed
+   - 计算机/物理/数学 → arXiv
+   - 需要 AI 推荐相关文献 → Semantic Scholar
+
+#### JSON 输出示例
+
+```json
+[
+  {
+    "title": "Attention Is All You Need",
+    "authors": ["Ashish Vaswani", "Noam Shazeer", "..."],
+    "year": 2017,
+    "journal": "Advances in neural information processing systems",
+    "doi": "10.48550/arXiv.1706.03762",
+    "citations": 100000,
+    "url": "https://doi.org/10.48550/arXiv.1706.03762",
+    "_source": "crossref"
+  }
+]
+```
+
+### 1.1 WebSearch 搜索（备选）
+
+**当脚本不可用时，使用 WebSearch 进行搜索。**
 
 **可用数据库：**
 
@@ -169,7 +329,32 @@ Author, A. A., & Author, B. B. (Year). Title. Journal, Volume(Issue), pages.
 
 ## 五、对话模板
 
-### 场景1：用户需要英文文献
+### 场景0：使用脚本搜索文献（推荐）
+
+**执行搜索命令**：
+
+```bash
+python scripts/scholar_search.py "搜索关键词" --sources crossref,semanticscholar --year 2020-2024 --limit 20 --json -
+```
+
+**输出示例**：
+
+> "我来使用学术搜索脚本帮你查找文献。
+>
+> **搜索查询**：`[关键词]`
+> **数据源**：CrossRef, Semantic Scholar
+> **年份范围**：2020-2024
+>
+> **搜索结果**（按引用数排序）：
+>
+> | # | 标题 | 作者 | 年份 | 期刊 | 引用数 | DOI |
+> |---|------|------|------|------|--------|-----|
+> | 1 | [...] | [...] | 2023 | [...] | 156 | [DOI] |
+> | 2 | [...] | [...] | 2022 | [...] | 89 | [DOI] |
+>
+> 需要我进一步获取某篇文献的详细信息吗？"
+
+### 场景1：用户需要英文文献（WebSearch 方式）
 
 > "我来帮你搜索相关英文文献。
 >
@@ -214,10 +399,53 @@ Author, A. A., & Author, B. B. (Year). Title. Journal, Volume(Issue), pages.
 >
 > 需要我帮你起草综述段落吗？"
 
-## 六、引用检查
+## 六、引用检查与验证
+
+### 6.1 引用验证（必须）
+
+**使用 `verification` 技能进行严格验证：**
+
+| 声称 | 验证方式 | 不充分 |
+|------|----------|--------|
+| 引用存在 | CrossRef API 确认 DOI | "看起来正确" |
+| 引用格式正确 | 运行格式检查脚本 | 目测检查 |
+| 作者信息准确 | 搜索原始来源 | "应该没错" |
+
+**验证脚本**：
+```bash
+# 验证 DOI 是否存在
+curl -s "https://api.crossref.org/works/10.1000/doi123"
+
+# 验证 BibTeX 文件
+python scripts/scholar_search.py --verify-bibtex refs.bib
+```
+
+### 6.2 PDF 文献解析
+
+**当用户提供 PDF 文件时，使用 `scripts/pdf_parser.py` 提取内容：**
+
+```bash
+# 提取 PDF 文本
+python scripts/pdf_parser.py paper.pdf --output paper_text.txt
+
+# 提取结构和摘要
+python scripts/pdf_parser.py paper.pdf --sections --abstract --json paper_info.json
+
+# 总结 PDF 内容
+python scripts/pdf_parser.py paper.pdf --summarize
+```
+
+**输出内容**：
+- 元数据（标题、作者、页数）
+- 摘要
+- IMRaD 章节（引言、方法、结果、讨论）
+- 自动摘要
+
+### 6.3 引用检查清单
 
 **必须检查：**
-- [ ] 所有引用的文献都真实存在
+- [ ] 所有引用的文献都真实存在（通过 DOI 验证）
 - [ ] 作者、年份、标题信息准确
 - [ ] 引用格式统一
 - [ ] 正文引用与参考文献列表一一对应
+- [ ] 每个引用都有上下文说明其与本研究的关系

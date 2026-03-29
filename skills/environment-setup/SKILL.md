@@ -1,6 +1,6 @@
 ---
 name: environment-setup
-description: "环境配置技能 - 完成 Python 画图环境的全流程配置"
+description: Use when Python environment setup is needed for data visualization or conda installation is required
 ---
 
 # 环境配置

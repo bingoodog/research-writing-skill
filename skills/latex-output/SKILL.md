@@ -1,6 +1,6 @@
 ---
 name: latex-output
-description: "LaTeX 输出技能 - 当用户需要 LaTeX 格式输出或使用学校/期刊模板时调用"
+description: Use when user requests LaTeX format output or has provided school/journal LaTeX templates
 ---
 
 # LaTeX 输出

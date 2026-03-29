@@ -1,6 +1,6 @@
 ---
 name: writing-humanities
-description: "文科写作技能 - 针对人文社科类论文的写作特点提供专项指导"
+description: Use when writing humanities or social science papers - provides discipline-specific writing guidance
 ---
 
 # 文科写作专项
