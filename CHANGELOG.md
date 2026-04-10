@@ -4,6 +4,23 @@
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)。
 
+## [3.2.0] - 2026-04-10
+
+### 新增
+
+#### 项目文档写作支持
+- 新增 `skills/writing-project/SKILL.md` — 项目文档专用写作技能，支持SRS、设计文档、可行性报告、结题报告、进展报告、架构文档、测试报告
+- `skills/brainstorming-research/templates.md` 新增7种项目文档结构模板
+- `skills/brainstorming-research/SKILL.md` 扩展头脑风暴支持项目文档类型（问答A/B/C分支）
+- `skills/using-research-writing/SKILL.md` 路由表新增项目文档写作路由
+
+### 更新
+
+- `SKILL.md`、`AGENTS.md`、`README.md` 更新描述，覆盖论文和项目文档两种写作场景
+- `plan-template/` 全部模板泛化：支持论文和项目文档，`[论文]` / `[项目文档]` 标注区分
+- 写作偏好规则分化：论文默认禁止列表，项目文档允许结构化列表
+- 语言/格式默认规则表格扩展，涵盖所有项目文档类型
+
 ## [3.0.0] - 2026-03-19
 
 ### 新增

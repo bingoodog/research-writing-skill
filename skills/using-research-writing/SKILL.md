@@ -42,7 +42,9 @@ description: Use when starting any research writing task - establishes workflow 
 ```dot
 digraph skill_flow {
     "用户消息" [shape=doublecircle];
-    "是否论文写作相关?" [shape=diamond];
+    "是否写作相关?" [shape=diamond];
+    "是否论文写作?" [shape=diamond];
+    "是否项目文档?" [shape=diamond];
     "已完成头脑风暴?" [shape=diamond];
     "调用 brainstorming-research" [shape=box];
     "根据任务调用对应技能" [shape=box];
@@ -50,9 +52,13 @@ digraph skill_flow {
     "更新 plan/progress.md" [shape=box];
     "询问用户确认" [shape=doublecircle];
 
-    "用户消息" -> "是否论文写作相关?";
-    "是否论文写作相关?" -> "已完成头脑风暴?" [label="是"];
-    "是否论文写作相关?" -> "执行任务" [label="否，普通问题"];
+    "用户消息" -> "是否写作相关?";
+    "是否写作相关?" -> "是否论文写作?" [label="是"];
+    "是否写作相关?" -> "执行任务" [label="否，普通问题"];
+    "是否论文写作?" -> "已完成头脑风暴?" [label="是"];
+    "是否论文写作?" -> "是否项目文档?" [label="否"];
+    "是否项目文档?" -> "已完成头脑风暴?" [label="是"];
+    "是否项目文档?" -> "执行任务" [label="否，普通问题"];
     "已完成头脑风暴?" -> "根据任务调用对应技能" [label="是"];
     "已完成头脑风暴?" -> "调用 brainstorming-research" [label="否"];
     "调用 brainstorming-research" -> "根据任务调用对应技能";
@@ -84,7 +90,9 @@ digraph skill_flow {
 | 任务类型 | 调用技能 |
 |----------|----------|
 | 开始新论文 / 确定选题 / 第一次对话 | brainstorming-research |
-| 写某一章节 | writing-chapters |
+| 开始新项目文档 / 第一次对话 | brainstorming-research |
+| 写某一章节（论文） | writing-chapters |
+| 写某一章节/节段（项目文档） | writing-project |
 | 文献综述 | literature-review |
 | 画图 / 数据可视化 | figures-python |
 | 流程图 / 架构图 | figures-diagram |
@@ -106,7 +114,7 @@ digraph skill_flow {
 
 ## 技能类型
 
-**严格型**（brainstorming-research、writing-chapters）：必须严格遵循，不得跳过步骤。
+**严格型**（brainstorming-research、writing-chapters、writing-project）：必须严格遵循，不得跳过步骤。
 
 **灵活型**（prompts-collection、figures-diagram）：可根据上下文调整。
 
@@ -114,4 +122,4 @@ digraph skill_flow {
 
 ## 用户指令
 
-用户指令说的是"做什么"，不是"怎么做"。"写第一章"或"帮我润色"不代表跳过工作流。
+用户指令说的是"做什么"，不是"怎么做"。"写第一章"、"写需求文档"或"帮我润色"不代表跳过工作流。

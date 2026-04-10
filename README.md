@@ -1,24 +1,29 @@
-# 科研写作助手 (Research Writing Assistant)
+# 写作助手 (Writing Assistant)
 
 > 📄 English version: [README_EN.md](README_EN.md)
 
-把"论文写作"从一次性聊天，升级成可追踪、可恢复、可复用的工程化协作流程。  
-这个 Skill 面向本科生、研究生和早期科研人员，目标很直接：少走弯路，减少返工，把时间花在真正有价值的研究内容上。
+把"写作任务"从一次性聊天，升级成可追踪、可恢复、可复用的工程化协作流程。  
+支持**学术论文写作**和**工程/软件项目文档写作**，面向本科生、研究生、工程师和项目经理。
 
 ![科研写作助手使用流程](assets/readme/workflow.png)
 
 ## 项目定位
 
-这不是一个"只会润色句子"的提示词包，而是一套完整的科研写作协作系统。  
-它会在任务开始前先对齐目标与约束，通过头脑风暴确认论文类型、研究背景、方法和章节结构，再按学科和任务路由到对应技能模块执行。
+这不是一个"只会润色句子"的提示词包，而是一套完整的写作协作系统。  
+它会在任务开始前先对齐目标与约束，通过头脑风暴确认文档类型、背景、结构，再按任务路由到对应技能模块执行。
 
-如果你在做毕业论文、课程项目论文或投稿初稿，这个 Skill 会比普通对话式写作工具更稳定，因为它强调流程、记录和回写，不依赖单轮记忆。
+适用于：
+- 毕业论文、期刊投稿、会议论文、课程论文
+- 软件需求规格说明书（SRS）、技术设计文档
+- 项目可行性报告、结题报告、进展报告
+- 系统架构文档、测试报告
 
 ## 核心能力
 
-- **头脑风暴**：7轮问答确认论文类型、学科、题目、研究背景、方法、章节结构
-- **AI辅助写作**：从选题推进、正文写作、图表生成到投稿前自审，按阶段门禁执行
-- **去AI化写作**：约束机械过渡词、空壳强调句、主观化表达和列表堆砌
+- **头脑风暴**：问答确认文档类型、受众、背景、方法、章节结构
+- **AI辅助写作**：从选题/立项推进、正文写作、图表生成到交付前自审，按阶段门禁执行
+- **去AI化写作**：约束机械过渡词、空壳强调句、主观化表达和列表堆砌（论文）
+- **项目文档规范**：SMART需求、结论前置、受众导向、可验证性检查（项目文档）
 - **学科化写作支持**：工科、社科、医学、法学模块分流
 - **文献综述支持**：英文检索整合与中文文献整理协作
 - **LaTeX模板支持**：用户提供学校/期刊模板，自动生成可编译的LaTeX项目
@@ -43,9 +48,10 @@
 
 | 产物类型 | 默认格式 | 说明 |
 |---|---|---|
-| 写作正文 | `.md` / 纯文本 / `.tex` | 便于版本管理和后续再加工 |
-| 章节文件 | `chapters/*.md` | 每章一个独立文件 |
-| LaTeX项目 | `chapters/*.tex` + `main.tex` | 可直接编译 |
+| 论文正文 | `.md` / `.tex` | 便于版本管理和后续再加工 |
+| 项目文档正文 | `.md` / `.docx`（Pandoc转换）| 每章/节一个独立文件 |
+| 章节文件 | `chapters/*.md` | 每章/节一个独立文件 |
+| LaTeX项目 | `chapters/*.tex` + `main.tex` | 可直接编译（论文）|
 | 图表脚本 | `.py` | 可复现图表生成逻辑 |
 | 提示词资产 | `.md` | 可复用的翻译、润色、去AI化模板 |
 
@@ -81,11 +87,11 @@ cd articlewriting-skill
 
 ## 标准协作流程（推荐）
 
-1. **头脑风暴**：说"我要写论文"，Skill会引导你确认论文类型、题目、研究背景等
-2. **章节规划**：确认章节结构后，Skill在 `chapters/` 创建框架
-3. **逐章写作**：按章节顺序写作，每章一个文件
-4. **图表生成**：需要数据图时，Skill生成Python脚本
-5. **自审检查**：使用peer-review技能进行投稿前自审
+1. **头脑风暴**：说"我要写论文"或"我要写需求文档"，Skill会引导你确认文档类型、背景等
+2. **章节/节段规划**：确认结构后，Skill在 `chapters/` 创建框架
+3. **逐章/节写作**：按顺序写作，每章/节一个文件
+4. **图表生成**：需要数据图或架构图时，Skill生成对应脚本或图表描述
+5. **自审检查**：使用peer-review技能进行交付前自审
 6. **交付**：手动迁移到Word/LaTeX完成最终排版
 
 ## 技能地图
@@ -93,8 +99,9 @@ cd articlewriting-skill
 | 场景 | 技能 |
 |---|---|
 | 入口与路由 | `skills/using-research-writing/` |
-| 头脑风暴 | `skills/brainstorming-research/` |
-| 章节写作 | `skills/writing-chapters/` |
+| 头脑风暴（论文/项目文档均适用）| `skills/brainstorming-research/` |
+| 论文章节写作 | `skills/writing-chapters/` |
+| 项目文档写作（SRS/设计/报告等）| `skills/writing-project/` |
 | LaTeX输出 | `skills/latex-output/` |
 | 通用写作规范 | `skills/writing-core/` |
 | 文科/社科写作 | `skills/writing-humanities/` |
@@ -102,7 +109,7 @@ cd articlewriting-skill
 | 法学写作 | `skills/writing-law/` |
 | 文献综述 | `skills/literature-review/` |
 | 翻译/润色/去AI化 | `skills/prompts-collection/` |
-| 投稿前自审 | `skills/peer-review/` |
+| 投稿/交付前自审 | `skills/peer-review/` |
 | 统计分析 | `skills/statistical-analysis/` |
 | Python 图表 | `skills/figures-python/` |
 | 流程图/架构图 | `skills/figures-diagram/` |
@@ -170,7 +177,8 @@ research-writing-skill/
 ├── skills/                     # 技能模块目录
 │   ├── using-research-writing/
 │   ├── brainstorming-research/
-│   ├── writing-chapters/
+│   ├── writing-chapters/       # 论文章节写作
+│   ├── writing-project/        # 项目文档写作（新增）
 │   ├── latex-output/
 │   ├── literature-review/
 │   ├── figures-python/

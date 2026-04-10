@@ -1,12 +1,12 @@
 ---
 name: research-writing-assistant
-description: Use when writing academic papers, theses, or research articles - supports brainstorming, chapter writing, literature review, and LaTeX output
+description: Use when writing academic papers, theses, research articles, engineering/software project documents, or general project reports - supports brainstorming, chapter writing, literature review, and LaTeX output
 allowed-tools: Read Write Edit Bash WebSearch
 ---
 
-# 科研写作助手 (Research Writing Assistant)
+# 写作助手 (Writing Assistant)
 
-面向本科与研究生论文写作的执行型 Skill。
+面向本科与研究生论文写作，以及工程/软件项目文档写作的执行型 Skill。
 
 ## 哲学原则
 
@@ -35,7 +35,8 @@ allowed-tools: Read Write Edit Bash WebSearch
 |------|------|------|
 | using-research-writing | `skills/using-research-writing/` | 入口技能，规则和路由 |
 | brainstorming-research | `skills/brainstorming-research/` | 头脑风暴，7轮问答 |
-| writing-chapters | `skills/writing-chapters/` | 章节写作 |
+| writing-chapters | `skills/writing-chapters/` | 论文章节写作 |
+| writing-project | `skills/writing-project/` | 项目文档写作 |
 | latex-output | `skills/latex-output/` | LaTeX 输出 |
 
 ### 写作支持技能
@@ -68,12 +69,12 @@ allowed-tools: Read Write Edit Bash WebSearch
 |----------|----------|
 | "用户说得很清楚了，直接开始写" | 必须先完成 brainstorming-research |
 | "这只是修改一小段" | 检查是否有 plan/，没有则先创建 |
-| "先写一段看看效果" | 必须先确认论文类型和章节结构 |
+| "先写一段看看效果" | 必须先确认文档类型和章节结构 |
 | "用户很着急，跳过讨论" | 流程可以加速，但不能跳过关键确认 |
 | "这是简单任务，不需要 plan" | 任何写作任务都需要 plan 记录 |
-| "我知道怎么写论文" | 必须按用户选择的类型和结构写 |
+| "我知道怎么写这个文档" | 必须按用户选择的类型和结构写 |
 | "先把内容写完再说格式" | 格式在 brainstorming 阶段确定 |
-| "这章内容很简单，不用确认" | 每章写完都必须让用户确认 |
+| "这章内容很简单，不用确认" | 每章/节写完都必须让用户确认 |
 
 ### 文献类 Red Flags
 
@@ -97,33 +98,35 @@ allowed-tools: Read Write Edit Bash WebSearch
 | "就这一次跳过验证" | 没有例外 |
 
 <EXTREMELY-IMPORTANT>
-任何论文写作任务开始前，必须先调用 `skills/using-research-writing/` 确定流程。
+任何写作任务开始前，必须先调用 `skills/using-research-writing/` 确定流程。
 不允许跳过头脑风暴直接写作。
+无论是论文写作还是项目文档写作，均适用此规则。
 </EXTREMELY-IMPORTANT>
 
 ### 标准流程
 
 1. **头脑风暴** → 调用 `brainstorming-research`
-   - 确认论文类型（7种）
-   - 确认学科领域
-   - 确认题目、研究背景、方法
-   - 确认章节结构
+   - 确认文档类型（论文7种 / 项目文档7种）
+   - **论文**：确认学科领域、题目、研究背景、方法、章节结构
+   - **项目文档**：确认项目背景、目标读者、约束条件、章节结构
    - 检测 LaTeX 模板
    - 创建 plan/ 和 chapters/
 
-2. **章节写作** → 调用 `writing-chapters`
-   - 每章独立文件
+2. **章节写作**
+   - **论文** → 调用 `writing-chapters`
+   - **项目文档** → 调用 `writing-project`
+   - 每章/节独立文件
    - 两阶段 Review（见下方）
    - 用户确认后继续
 
-3. **LaTeX 输出**（可选）→ 调用 `latex-output`
+3. **LaTeX 输出**（可选，仅论文）→ 调用 `latex-output`
    - 用户提供模板
    - 输出 .tex 文件
    - 可直接编译
 
-4. **两阶段 Review**（每章完成后）
+4. **两阶段 Review**（每章/节完成后）
    - **阶段一：规范合规** — 检查字数、结构、引用格式是否满足要求
-   - **阶段二:质量检查** — 检查去AI化、语言流畅度、学术表达
+   - **阶段二：质量检查** — 检查去AI化、语言流畅度、表达准确性
 
 ## 模块兼容（向后兼容）
 
