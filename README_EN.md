@@ -1,26 +1,33 @@
-# Research Writing Assistant
+# Writing Assistant
 
-Upgrade "paper writing" from one-off chat sessions into a trackable, recoverable, and reusable engineering-style collaboration workflow.  
-This Skill is designed for undergraduates, graduate students, and early-stage researchers with a clear goal: fewer detours, less rework, and more time spent on research that truly matters.
+> 📄 中文版：[README.md](README.md)
 
-![Research Writing Assistant Workflow](assets/readme/workflow.png)
+Upgrade "writing tasks" from one-off chat sessions into a trackable, recoverable, and reusable engineering-style collaboration workflow.  
+Supports both **academic paper writing** and **engineering/software project document writing**, designed for undergraduates, graduate students, engineers, and project managers.
+
+![Writing Assistant Workflow](assets/readme/workflow.png)
 
 ## What This Is
 
-This is not a prompt pack that only polishes sentences. It is a complete research writing collaboration system.  
-Before starting any task, it aligns goals and constraints through a brainstorming process to confirm paper type, research background, methods, and chapter structure, then routes to the appropriate skill module based on your discipline and task type.
+This is not a prompt pack that only polishes sentences. It is a complete writing collaboration system.  
+Before starting any task, it aligns goals and constraints through a brainstorming process to confirm document type, background, and structure, then routes to the appropriate skill module based on task type.
 
-If you are working on a thesis, a course project paper, or a submission draft, this Skill is more reliable than ordinary conversational writing tools — because it emphasizes process, documentation, and write-back, without depending on single-session memory.
+Use cases:
+- Undergraduate/graduate theses, journal submissions, conference papers, course papers
+- Software Requirements Specifications (SRS), technical design documents
+- Project feasibility reports, project closure reports, progress reports
+- System architecture documents, test reports
 
 ## Core Capabilities
 
-- **Brainstorming**: 7-round Q&A to confirm paper type, discipline, title, research background, methods, chapter structure
-- **End-to-end collaboration**: From topic development, body writing, and figure generation to pre-submission self-review, executed with stage gates
-- **De-AI writing**: Constrains mechanical transition words, hollow emphasis phrases, subjective expressions, and bullet-point dumping
+- **Brainstorming**: Q&A to confirm document type, audience, background, methods, and chapter structure
+- **AI-assisted writing**: From topic/project initiation, body writing, and figure generation to pre-delivery self-review, executed with stage gates
+- **De-AI writing**: Constrains mechanical transition words, hollow emphasis phrases, subjective expressions, and bullet-point dumping (papers)
+- **Project document standards**: SMART requirements, conclusion-first structure, audience-oriented writing, verifiability checks (project docs)
 - **Discipline-specific writing support**: Routed modules for engineering, social sciences, medicine, and law
 - **Literature review support**: Integration of English-language search and Chinese literature organization
-- **LaTeX template support**: Provide your institution/journal template, auto-generate compilable LaTeX project
-- **Environment automation**: Miniconda installation, virtual environment creation, plotting dependency setup
+- **LaTeX template support**: Provide your institution/journal template; auto-generates a compilable LaTeX project
+- **Environment automation**: Miniconda installation, virtual environment creation, plotting dependency setup and troubleshooting
 
 ## Supported Platforms
 
@@ -41,37 +48,38 @@ By default, Skill outputs are project files — not finished Word documents.
 
 | Output Type | Default Format | Notes |
 |---|---|---|
-| Written body | `.md` / plain text / `.tex` | Suitable for version control and further processing |
-| Chapter files | `chapters/*.md` | One file per chapter |
-| LaTeX project | `chapters/*.tex` + `main.tex` | Directly compilable |
+| Paper body | `.md` / `.tex` | Suitable for version control and further processing |
+| Project document body | `.md` / `.docx` (via Pandoc) | One file per chapter/section |
+| Chapter/section files | `chapters/*.md` | One file per chapter/section |
+| LaTeX project | `chapters/*.tex` + `main.tex` | Directly compilable (papers) |
 | Figure scripts | `.py` | Reproducible figure generation logic |
 | Prompt assets | `.md` | Reusable templates for translation, polishing, and de-AI-ification |
 
 ## Important Boundaries (Read First)
 
-1. The Skill does not automatically generate or write directly to `.docx` files by default.  
-2. The Skill does not open Word and apply formatting on your behalf — you will need to copy manually or use a conversion tool.  
-3. The Skill can generate plain-text paragraphs ready to paste into Word, but final styling (heading levels, headers/footers, table of contents, reference fields) must be handled in Word.  
+1. The Skill does not automatically generate or write directly to `.docx` files by default.
+2. The Skill does not open Word and apply formatting on your behalf — you will need to copy manually or use a conversion tool.
+3. The Skill can generate plain-text paragraphs ready to paste into Word, but final styling (heading levels, headers/footers, table of contents, reference fields) must be handled in Word.
 4. References and data are never fabricated; all citations must be traceable. Please independently verify high-risk conclusions.
 
 ## Installation
 
 ### Option 1: Direct Download
 
-Download the repository, extract it, and copy `research-writing-skill/` into your paper writing directory.
+Download the repository, extract it, and copy `research-writing-skill/` into your writing project directory.
 
 ### Option 2: Git Clone
 
 ```bash
-git clone https://github.com/Norman-bury/articlewriting-skill.git
-cd articlewriting-skill
+git clone https://github.com/bingoodog/research-writing-skill.git
+cd research-writing-skill
 ```
 
 ### Platform-specific Installation
 
 - **Codex**: See `.codex/INSTALL.md`
 - **OpenCode**: See `.opencode/INSTALL.md`
-- **Others**: Place the entire directory in your paper project root
+- **Others**: Place the entire directory in your project root
 
 ## Real Usage Example (Input → Output)
 
@@ -79,11 +87,11 @@ cd articlewriting-skill
 
 ## Standard Collaboration Workflow (Recommended)
 
-1. **Brainstorming**: Say "I want to write a paper", the Skill will guide you to confirm paper type, title, research background, etc.
-2. **Chapter planning**: After confirming chapter structure, the Skill creates framework in `chapters/`
-3. **Chapter writing**: Write chapter by chapter, one file per chapter
-4. **Figure generation**: When data figures are needed, the Skill generates Python scripts
-5. **Self-review**: Use the peer-review skill for pre-submission review
+1. **Brainstorming**: Say "I want to write a paper" or "I want to write a requirements document", the Skill will guide you to confirm document type, background, audience, etc.
+2. **Chapter/section planning**: After confirming structure, the Skill creates a framework in `chapters/`
+3. **Section-by-section writing**: Write one section at a time, one file per section
+4. **Figure generation**: When data figures or architecture diagrams are needed, the Skill generates corresponding scripts or diagram descriptions
+5. **Self-review**: Use the peer-review skill for pre-delivery self-review
 6. **Delivery**: Manually migrate to Word/LaTeX for final formatting
 
 ## Skill Map
@@ -91,8 +99,9 @@ cd articlewriting-skill
 | Scenario | Skill |
 |---|---|
 | Entry and routing | `skills/using-research-writing/` |
-| Brainstorming | `skills/brainstorming-research/` |
-| Chapter writing | `skills/writing-chapters/` |
+| Brainstorming (papers and project docs) | `skills/brainstorming-research/` |
+| Paper chapter writing | `skills/writing-chapters/` |
+| Project document writing (SRS/design/reports) | `skills/writing-project/` |
 | LaTeX output | `skills/latex-output/` |
 | General writing standards | `skills/writing-core/` |
 | Humanities / social science writing | `skills/writing-humanities/` |
@@ -100,7 +109,7 @@ cd articlewriting-skill
 | Law writing | `skills/writing-law/` |
 | Literature review | `skills/literature-review/` |
 | Translation / polishing / de-AI | `skills/prompts-collection/` |
-| Pre-submission self-review | `skills/peer-review/` |
+| Pre-submission / pre-delivery self-review | `skills/peer-review/` |
 | Statistical analysis | `skills/statistical-analysis/` |
 | Python figures | `skills/figures-python/` |
 | Flowcharts / architecture diagrams | `skills/figures-diagram/` |
@@ -139,7 +148,7 @@ Note: This only handles format conversion — it does not replace your instituti
 
 ### Why are the default outputs not Word files?
 
-Research collaboration needs text assets that are trackable, reusable, and version-controlled. Markdown is better suited for iterative work. Word is appropriate for final delivery, so it is handled as the last step.
+Writing collaboration needs text assets that are trackable, reusable, and version-controlled. Markdown is better suited for iterative work. Word is appropriate for final delivery, so it is handled as the last step.
 
 ### Can it generate the final submittable version for me?
 
@@ -148,6 +157,10 @@ It can produce content close to a final draft, but your institution's template, 
 ### Will this Skill fabricate references?
 
 No. The rules explicitly prohibit fabricating references or data. All citations must be traceable.
+
+### Does it support project documents in addition to papers?
+
+Yes. Since v3.2.0, the Skill fully supports engineering/software project documents including SRS, design documents (HLD/LLD), feasibility reports, project closure reports, progress reports, system architecture documents, and test reports. The brainstorming flow automatically routes to the appropriate questions and writing norms based on document type.
 
 ## Repository Structure
 
@@ -168,7 +181,8 @@ research-writing-skill/
 ├── skills/                     # Skill modules directory
 │   ├── using-research-writing/
 │   ├── brainstorming-research/
-│   ├── writing-chapters/
+│   ├── writing-chapters/       # Paper chapter writing
+│   ├── writing-project/        # Project document writing
 │   ├── latex-output/
 │   ├── literature-review/
 │   ├── figures-python/
@@ -190,6 +204,6 @@ research-writing-skill/
 
 ## Version
 
-- Version: 3.0.0
-- Updated: 2026-03-19
+- Version: 3.2.0
+- Updated: 2026-04-10
 - Maintenance goal: Stable workflow, traceable content, deliverable outputs, multi-platform support
