@@ -71,8 +71,8 @@
 ### 方式二：Git Clone
 
 ```bash
-git clone https://github.com/Norman-bury/articlewriting-skill.git
-cd articlewriting-skill
+git clone https://github.com/bingoodog/research-writing-skill.git
+cd research-writing-skill
 ```
 
 ### 各平台安装
@@ -178,7 +178,7 @@ research-writing-skill/
 │   ├── using-research-writing/
 │   ├── brainstorming-research/
 │   ├── writing-chapters/       # 论文章节写作
-│   ├── writing-project/        # 项目文档写作（新增）
+│   ├── writing-project/        # 项目文档写作
 │   ├── latex-output/
 │   ├── literature-review/
 │   ├── figures-python/
@@ -200,5 +200,5 @@ research-writing-skill/
 
 ## 版本
 
-- 版本：3.1.0
-- 更新日期： 2026-03-29
+- 版本：3.2.0
+- 更新日期：2026-04-10
